@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/color_white"
+    app:cardCornerRadius="2dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/stark_icon"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="8dp"
+                android:paddingRight="16dp"
+                android:text="Фамилия Имя"
+                android:textColor="@color/color_black"
+                android:textSize="20sp"
+
+
+                />
+            <TextView
+                android:id="@+id/item_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="si vis pacem, para bellum"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp"
+                android:textColor="@color/color_gray"
+                android:paddingLeft="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

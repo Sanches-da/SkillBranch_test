@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordinator"
+    >
+    <RelativeLayout
+        android:id="@+id/activity_splash_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="ui.activities.SplashScreenActivity"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/splash"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView"
+            android:scaleType="centerCrop"
+            android:contentDescription=""
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:fitsSystemWindows="true"/>
+
+        <include layout="@layout/progress_splash"
+                 android:layout_centerVertical="true"
+                 android:layout_centerHorizontal="true"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:visibility="visible"/>
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

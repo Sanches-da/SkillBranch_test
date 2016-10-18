@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/lannister_house"
+        android:checkable="true"
+        android:icon="@drawable/lanister_icon"
+        android:title="@string/lannister_house_name"/>
+    <item android:id="@+id/stark_house"
+          android:icon="@drawable/stark_icon"
+          android:title="@string/stark_house_name"/>
+    <item android:id="@+id/targarien_house"
+          android:icon="@drawable/stark_icon"
+          android:title="@string/targarien_house_name"/>
+</group>
+</menu>
