@@ -10,16 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skill_branch.test.R;
-import com.skill_branch.test.data.Character;
-import com.skill_branch.test.data.House;
+import com.skill_branch.test.data.database.CharacterModel;
 import com.skill_branch.test.data.database.DataManager;
+import com.skill_branch.test.data.database.HouseModel;
 import com.skill_branch.test.utils.ConstantManager;
-import com.skill_branch.test.utils.GameOfThronesApplication;
 
 public class CharacterActivity extends AppCompatActivity {
     private View mBaseView;
     private long mCharId;
-    private Character mCharacter;
+    private CharacterModel mCharacter;
+    private CharacterModel mCharFather;
+    private CharacterModel mCharMother;
     private ImageView mImageView;
     private TextView mName;
     private TextView mWords;
@@ -28,7 +29,9 @@ public class CharacterActivity extends AppCompatActivity {
     private TextView mAliases;
     private Button mFather;
     private Button mMother;
-    private House mHouse;
+    private HouseModel mHouse;
+
+    private DataManager dm;
 
 
 
@@ -39,44 +42,71 @@ public class CharacterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
 
-        mCharId = getIntent().getLongExtra(ConstantManager.PARCELABLE_KEY,0);
-        mCharacter= DataManager.getInstance().findCharacter(mCharId);
-        mHouse = mCharacter.getHouse();
+        dm = DataManager.getInstance();
 
         mBaseView = findViewById(R.id.activity_character);
         mImageView = (ImageView) findViewById(R.id.char_image);
         mWords= (TextView) findViewById(R.id.char_words);
-        if (mHouse==null||mHouse.getLogo()==null) {
-            mImageView.setImageDrawable(GameOfThronesApplication.getContext().getDrawable(R.drawable.splash));
-        }else{
-            mImageView.setImageDrawable(mHouse.getLogo());
-            mWords.setText(mHouse.getWords());
-        }
 
         mName= (TextView) findViewById(R.id.char_name);
-        mName.setText(mCharacter.getName());
         mBorn = (TextView) findViewById(R.id.char_born);
-        mBorn.setText(mCharacter.getBorn());
         mTitles = (TextView) findViewById(R.id.char_titles);
-        mTitles.setText(mCharacter.getTitles());
         mAliases = (TextView) findViewById(R.id.char_aliases);
-        mAliases.setText(mCharacter.getAliases());
         mFather = (Button) findViewById(R.id.char_father);
-        Character mParent = mCharacter.getFather();
-        if (mParent == null){
-            mFather.setVisibility(View.INVISIBLE);
-        } else {
-            mFather.setVisibility(View.VISIBLE);
-            mFather.setText(mParent.getName());
+        mMother = (Button) findViewById(R.id.char_mother);
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        mCharId = getIntent().getLongExtra(ConstantManager.PARCELABLE_KEY,0);
+        mCharacter= dm.getCharacterById(mCharId);
+        if (mCharacter == null){
+            showSnackbar("Error: character not found");
+            this.finish();
+        }
+        mHouse = dm.getHouseById(mCharacter.getHouse());
+        if (mHouse==null){
+            mHouse = new HouseModel(0);
         }
 
-        mMother = (Button) findViewById(R.id.char_mother);
-        mParent = mCharacter.getFather();
-        if (mParent == null){
-            mMother.setVisibility(View.INVISIBLE);
+        mImageView.setImageDrawable(HouseModel.getLogo(mCharacter.getHouse()));
+        mWords.setText(mHouse.getWords());
+        mName.setText(mCharacter.getName());
+        mBorn.setText(mCharacter.getBorn());
+        mTitles.setText(mCharacter.getTitles());
+        mAliases.setText(mCharacter.getAliases());
+
+
+        long mParent = mCharacter.getFather();
+        if (mParent <= 0){
+            mFather.setVisibility(View.INVISIBLE);
+            mCharFather = null;
         } else {
-            mMother.setVisibility(View.VISIBLE);
-            mMother.setText(mParent.getName());
+            mCharFather = dm.getCharacterById(mParent);
+            if (mCharFather != null) {
+                mFather.setText(mCharFather.getName());
+                mFather.setVisibility(View.VISIBLE);
+            }else{
+                mFather.setVisibility(View.INVISIBLE);
+            }
+
+        }
+
+        mParent = mCharacter.getMother();
+        if (mParent <= 0){
+            mMother.setVisibility(View.INVISIBLE);
+            mCharMother = null;
+        } else {
+            mCharMother = dm.getCharacterById(mParent);
+            if (mCharMother != null) {
+                mMother.setText(mCharMother.getName());
+                mMother.setVisibility(View.VISIBLE);
+            }else{
+                mMother.setVisibility(View.INVISIBLE);
+            }
         }
 
 
@@ -86,23 +116,30 @@ public class CharacterActivity extends AppCompatActivity {
     }
 
     public void clickFather(View view){
-        Character mParent = mCharacter.getFather();
-        if (mParent == null) return;
+        if (mCharFather == null) return;
         Intent profileIntent = new Intent(CharacterActivity.this, CharacterActivity.class);
-        profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, mParent.getId());
+        profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, mCharFather.getRemote_id());
 
         startActivity(profileIntent);
     }
 
     public void clickMother(View view){
-        Character mParent = mCharacter.getMother();
-        if (mParent == null) return;
+        if (mCharMother == null) return;
         Intent profileIntent = new Intent(CharacterActivity.this, CharacterActivity.class);
-        profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, mParent.getId());
+        profileIntent.putExtra(ConstantManager.PARCELABLE_KEY, mCharMother.getRemote_id());
 
         startActivity(profileIntent);
     }
     private void showSnackbar(String message) {
         Snackbar.make(mBaseView, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mHouse = null;
+        mCharFather = null;
+        mCharMother = null;
+        this.finish();
     }
 }

@@ -5,17 +5,16 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.skill_branch.test.R;
-import com.skill_branch.test.data.House;
+import com.skill_branch.test.data.database.HouseModel;
 
 import java.util.List;
 
 
 public class HousesAdapter extends PagerAdapter {
 
-    List<House> pages = null;
+    List<HouseModel> pages = null;
 
-    public HousesAdapter(List<House> pages){
+    public HousesAdapter(List<HouseModel> pages){
         this.pages = pages;
     }
 

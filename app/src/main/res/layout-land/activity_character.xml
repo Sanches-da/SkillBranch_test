@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:fontFamily="sans-serif"
-            android:textSize="48sp"
+            android:textSize="32sp"
             android:text="John Doe"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
@@ -209,7 +209,7 @@
                 android:textColor="@color/color_white"
                 android:background="@color/color_red"
                 android:text="FATHER"
-                android:onClick="clickFather (CharacterActivity)"/>
+                android:onClick="clickFather"/>
         </LinearLayout>
 
         <LinearLayout
@@ -239,7 +239,7 @@
                 android:textColor="@color/color_white"
                 android:background="@color/color_red"
                 android:text="MOTHER"
-                android:onClick="clickMother (CharacterActivity)"/>
+                android:onClick="clickMother"/>
         </LinearLayout>
 
     </LinearLayout>

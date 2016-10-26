@@ -3,7 +3,6 @@ package com.skill_branch.test.ui.activities;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,19 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.skill_branch.test.R;
-import com.skill_branch.test.data.Character;
-import com.skill_branch.test.data.House;
 import com.skill_branch.test.data.database.DataManager;
+import com.skill_branch.test.data.database.HouseModel;
 import com.skill_branch.test.ui.adapters.CharactersAdapter;
 import com.skill_branch.test.ui.adapters.HousesAdapter;
 import com.skill_branch.test.utils.ConstantManager;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -56,7 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         RecyclerView page;
 
-        for (House iHouse : DataManager.sHouses){
+        List<HouseModel> houses= DataManager.getInstance().getHouses();
+
+        for (HouseModel iHouse : houses){
             page = (RecyclerView) inflater.inflate(R.layout. house_pager, null);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             page.setLayoutManager(linearLayoutManager);
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        mPagerAdapter = new HousesAdapter(DataManager.sHouses);
+        mPagerAdapter = new HousesAdapter(houses);
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(0);
 
