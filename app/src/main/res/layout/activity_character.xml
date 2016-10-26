@@ -211,7 +211,7 @@
                     android:textColor="@color/color_white"
                     android:background="@color/color_red"
                     android:text="FATHER"
-                    android:onClick="clickFather (CharacterActivity)"/>
+                    android:onClick="clickFather"/>
             </LinearLayout>
 
             <LinearLayout
@@ -241,7 +241,7 @@
                     android:textColor="@color/color_white"
                     android:background="@color/color_red"
                     android:text="MOTHER"
-                    android:onClick="clickMother (CharacterActivity)"/>
+                    android:onClick="clickMother"/>
             </LinearLayout>
 
         </LinearLayout>

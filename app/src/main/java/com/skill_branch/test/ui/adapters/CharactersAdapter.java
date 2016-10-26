@@ -6,18 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skill_branch.test.R;
-import com.skill_branch.test.data.Character;
-import com.skill_branch.test.data.House;
+import com.skill_branch.test.data.database.CharacterModel;
+import com.skill_branch.test.data.database.HouseModel;
 
 import java.util.List;
 
 public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.ViewHolder> {
-    private List<Character> mCharacters;
+    private List<CharacterModel> mCharacters;
     static private Context mContext;
     private ViewHolder.CustomClickListener mCustomClickListener;
 
@@ -27,7 +26,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
         return mCharacters.get(position).getId();
     }
 
-    public CharactersAdapter(List<Character> characters, ViewHolder.CustomClickListener clickListener) {
+    public CharactersAdapter(List<CharacterModel> characters, ViewHolder.CustomClickListener clickListener) {
         mCharacters = characters;
         this.mCustomClickListener = clickListener;
     }
@@ -42,15 +41,12 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Character character = mCharacters.get(position);
+        final CharacterModel character = mCharacters.get(position);
 
         holder.mFullName.setText(character.getName());
-        holder.mInfo.setText(character.getTitles()+(character.getFather()==null?"":"Father: "+character.getFather().getName())+(character.getMother()==null?"":"Mother: "+character.getMother().getName()));
-        House house = character.getHouse();
-        if (house!=null) {
-            holder.mImage.setImageDrawable(house.getIcon());
-        }
-        holder.mItemId = character.getId();
+        holder.mInfo.setText(character.getTitles());
+        holder.mImage.setImageDrawable(HouseModel.getIcon(character.getHouse()));
+        holder.mItemId = character.getRemote_id();
 
 
     }

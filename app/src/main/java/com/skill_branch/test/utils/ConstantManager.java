@@ -10,4 +10,5 @@ public interface ConstantManager {
     long LANNISTER_ID = 229;
     long TARGARYEN_ID = 378;
     String PARCELABLE_KEY = "EXTRA_CHARACTER_ID";
+    String DATA_LOADING = "GOT_LOAD_DATA";
 }
